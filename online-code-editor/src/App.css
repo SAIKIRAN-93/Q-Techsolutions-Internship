@@ -1,0 +1,817 @@
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #4338ca;
+  --accent-color: #6366f1;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --dark-bg: #0f172a;
+  --dark-secondary: #1e293b;
+  --light-bg: #ffffff;
+  --gradient: linear-gradient(135deg, #4f46e5, #6366f1);
+  --border-color: #e2e8f0;
+  --dark-border: #2d3748;
+  --editor-bg: #ffffff;
+  --preview-bg: #ffffff;
+  --header-bg: #f8fafc;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  color: #333333;
+  transition: all 0.3s ease;
+}
+
+.dark-mode {
+  background-color: var(--dark-bg);
+  color: #e2e8f0;
+  --border-color: #2d3748;
+  --dark-border: #4a5568;
+  --editor-bg: #1a1a1a;
+  --preview-bg: #1a1a1a;
+  --header-bg: #111827;
+}
+
+.navbar {
+  padding: 0.8rem 1.5rem;
+  background: var(--gradient);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-section h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.sub-navbar {
+  background: var(--light-bg);
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .sub-navbar {
+  background: var(--dark-secondary);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--primary-color);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background: var(--gradient);
+  color: white;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-button.danger {
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
+.action-button.danger:hover {
+  background: var(--error-color);
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .logo-section h1 {
+    font-size: 1.2rem;
+  }
+
+  .sub-navbar {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0.8rem 1rem;
+  }
+
+  .tab-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .action-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tab-button, .action-button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Updated layout styles */
+.main-container {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  gap: 0;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+  background: var(--editor-bg);
+}
+
+/* Editor Panel Styles */
+.editor-panel {
+  display: none;
+  height: 100%;
+  background: var(--editor-bg);
+  border-right: 2px solid var(--border-color);
+  position: relative;
+}
+
+.editor-panel::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent,
+    var(--accent-color),
+    transparent
+  );
+}
+
+.editor-panel.active {
+  display: block;
+}
+
+.editor-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--header-bg);
+  border-bottom: 2px solid var(--border-color);
+  position: relative;
+}
+
+.editor-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--gradient);
+  transform: scaleX(0.3);
+  transition: transform 0.3s ease;
+}
+
+.editor-header:hover::after {
+  transform: scaleX(0.5);
+}
+
+.editor-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.editor-panel textarea {
+  flex: 1;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  background: var(--editor-bg);
+  color: #1a1a1a;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+}
+
+.dark-mode .editor-panel textarea {
+  color: #e2e8f0;
+}
+
+/* Updated Preview Container Styles */
+.preview-container {
+  height: 100%;
+  background: var(--preview-bg);
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid var(--border-color);
+  position: relative;
+}
+
+.preview-container::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent,
+    var(--accent-color),
+    transparent
+  );
+}
+
+.preview-header {
+  padding: 16px;
+  background: var(--header-bg);
+  border-bottom: 2px solid var(--border-color);
+  position: relative;
+}
+
+.preview-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--gradient);
+  transform: scaleX(0.3);
+  transition: transform 0.3s ease;
+}
+
+.preview-header:hover::after {
+  transform: scaleX(0.5);
+}
+
+.preview-header h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.run-button,
+.preview-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 38px;
+  min-width: 120px;
+  border: 2px solid transparent;
+}
+
+.run-button {
+  background: var(--gradient);
+  color: white;
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+}
+
+.preview-button {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.run-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.preview-button:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
+}
+
+iframe {
+  flex: 1;
+  width: 100%;
+  height: calc(100% - 85px);
+  border: none;
+  background: white;
+  padding: 16px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode iframe {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Preview Loading State */
+iframe {
+  transition: opacity 0.3s ease;
+}
+
+iframe:not([srcdoc]) {
+  opacity: 0.7;
+}
+
+/* Preview Container Shadow */
+.preview-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.05), transparent);
+  pointer-events: none;
+}
+
+.dark-mode .preview-container::before {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), transparent);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .editor-panel,
+  .preview-container {
+    border: none;
+  }
+
+  .editor-panel::after,
+  .preview-container::before {
+    display: none;
+  }
+
+  .preview-header {
+    padding: 12px;
+  }
+
+  .preview-actions {
+    flex-wrap: wrap;
+  }
+
+  .run-button,
+  .preview-button {
+    flex: 1;
+    min-width: unset;
+    padding: 8px 12px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  iframe {
+    height: calc(100% - 75px);
+    padding: 12px;
+  }
+
+  .preview-container::before {
+    display: none;
+  }
+}
+
+/* Preview Scroll Behavior */
+iframe {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Preview Container Animation */
+.preview-container {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Scrollbar Styles */
+.editor-panel textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editor-panel textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.editor-panel textarea::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.dark-mode .editor-panel textarea::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Add smooth transitions */
+.editor-panel textarea {
+  transition: background-color 0.3s ease;
+}
+
+/* Ensure proper focus states */
+.editor-panel textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* Code Editor Enhancements */
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+.dark-mode textarea::placeholder {
+  color: #475569;
+}
+
+/* Animation for Run Button */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.preview-container button:active {
+  animation: pulse 0.3s ease-in-out;
+}
+
+/* Glass effect for buttons */
+.icon-button, .action-button, .run-button, .new-tab-button {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Tooltip styles */
+[title] {
+  position: relative;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Animations */
+@keyframes borderGlow {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+.editor-panel::after,
+.preview-container::before {
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+/* Add these animation keyframes at the top */
+@keyframes slideInRight {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes borderPulse {
+  0% { border-color: var(--primary-color); }
+  50% { border-color: var(--accent-color); }
+  100% { border-color: var(--primary-color); }
+}
+
+/* Add these to your existing styles */
+.editor-panel.active {
+  display: block;
+  animation: slideInLeft 0.4s ease-out;
+}
+
+.preview-container {
+  animation: slideInRight 0.4s ease-out;
+}
+
+.editor-header, .preview-header {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.run-button {
+  background: var(--gradient);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+.run-button:active {
+  animation: pulse 0.3s ease-in-out;
+}
+
+.preview-button {
+  animation: borderPulse 3s infinite;
+}
+
+/* Add hover animations */
+.editor-panel textarea:focus {
+  animation: pulse 0.3s ease-in-out;
+}
+
+/* Tab switching animation */
+.tab-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--gradient);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.tab-button:hover::after {
+  transform: scaleX(0.5);
+}
+
+.tab-button.active::after {
+  transform: scaleX(1);
+}
+
+/* Add loading animation for iframe */
+@keyframes loading {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+iframe:not([srcdoc]) {
+  background: linear-gradient(90deg, 
+    var(--editor-bg) 25%, 
+    var(--border-color) 50%, 
+    var(--editor-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+/* Add transition effects */
+.editor-panel textarea,
+.preview-container,
+.run-button,
+.preview-button {
+  transition: all 0.3s ease;
+}
+
+/* Hover effects with animations */
+.editor-header:hover,
+.preview-header:hover {
+  transform: translateY(-1px);
+  transition: transform 0.3s ease;
+}
+
+/* Add floating animation for buttons */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+.run-button:hover,
+.preview-button:hover {
+  animation: float 2s ease infinite;
+}
+
+/* Add ripple effect for buttons */
+.run-button,
+.preview-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.run-button::after,
+.preview-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.run-button:active::after,
+.preview-button:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Dark mode transition */
+.App {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth tab transitions */
+.editor-panel {
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.editor-panel.active {
+  opacity: 1;
+}
+
+/* Add animation for error states */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.error {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Add typing indicator animation */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.typing-animation {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 1s steps(40, end);
+}
+
